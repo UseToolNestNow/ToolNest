@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Case Converter - ToolNest</title>
+
+    <meta
+        name="description"
+        content="Convert text to uppercase, lowercase, title case, sentence case, alternating case, and more."
+    >
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #0f1115;
+            color: white;
+            min-height: 100vh;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 8%;
+            border-bottom: 1px solid #252830;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        header a {
+            color: #aaa;
+            text-decoration: none;
+        }
+
+        header a:hover {
+            color: white;
+        }
+
+        .page {
+            width: 90%;
+            max-width: 900px;
+            margin: 70px auto;
+        }
+
+        .page h1 {
+            text-align: center;
+            font-size: 45px;
+            margin-bottom: 15px;
+        }
+
+        .description {
+            text-align: center;
+            color: #888;
+            margin-bottom: 40px;
+        }
+
+        .converter {
+            background: #181b21;
+            border: 1px solid #292c34;
+            border-radius: 18px;
+            padding: 30px;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 250px;
+            resize: vertical;
+
+            padding: 18px;
+
+            background: #101217;
+            color: white;
+
+            border: 1px solid #333;
+            border-radius: 12px;
+
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+
+            outline: none;
+        }
+
+        textarea:focus {
+            border-color: #666;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 14px;
+
+            background: #101217;
+            color: white;
+
+            border: 1px solid #333;
+            border-radius: 10px;
+
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #292c34;
+        }
+
+        .primary {
+            background: white;
+            color: black;
+            border-color: white;
+        }
+
+        .primary:hover {
+            background: #ddd;
+        }
+
+        .actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .status {
+            min-height: 20px;
+            margin-top: 15px;
+
+            color: #888;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        @media (max-width: 650px) {
+
+            .page h1 {
+                font-size: 38px;
+            }
+
+            .buttons {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 450px) {
+
+            .buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="logo">
+        ToolNest
+    </div>
+
+    <a href="../index.html">
+        ← Back to ToolNest
+    </a>
+
+</header>
+
+
+<main class="page">
+
+
+    <h1>
+        Case Converter
+    </h1>
+
+
+    <p class="description">
+        Quickly change the capitalization of your text.
+    </p>
+
+
+    <div class="converter">
+
+
+        <textarea
+            id="text"
+            placeholder="Type or paste your text here..."
+        ></textarea>
+
+
+        <div class="buttons">
+
+
+            <button
+                class="primary"
+                onclick="convertToUpperCase()"
+            >
+                UPPERCASE
+            </button>
+
+
+            <button
+                onclick="convertToLowerCase()"
+            >
+                lowercase
+            </button>
+
+
+            <button
+                onclick="convertToTitleCase()"
+            >
+                Title Case
+            </button>
+
+
+            <button
+                onclick="convertToSentenceCase()"
+            >
+                Sentence case
+            </button>
+
+
+            <button
+                onclick="convertToAlternatingCase()"
+            >
+                aLtErNaTiNg
+            </button>
+
+
+            <button
+                onclick="convertToInverseCase()"
+            >
+                iNVERSE
+            </button>
+
+
+        </div>
+
+
+        <div class="actions">
+
+
+            <button
+                onclick="copyText()"
+            >
+                📋 Copy Text
+            </button>
+
+
+            <button
+                onclick="clearText()"
+            >
+                🗑️ Clear
+            </button>
+
+
+        </div>
+
+
+        <div
+            class="status"
+            id="status"
+        ></div>
+
+
+    </div>
+
+
+</main>
+
+
+<script>
+
+
+    const textArea =
+        document.getElementById("text");
+
+
+    const status =
+        document.getElementById("status");
+
+
+    function convertToUpperCase() {
+
+        textArea.value =
+            textArea.value.toUpperCase();
+
+        showStatus("Converted to uppercase.");
+
+    }
+
+
+    function convertToLowerCase() {
+
+        textArea.value =
+            textArea.value.toLowerCase();
+
+        showStatus("Converted to lowercase.");
+
+    }
+
+
+    function convertToTitleCase() {
+
+        textArea.value =
+            textArea.value
+                .toLowerCase()
+                .replace(
+                    /\b\w/g,
+                    function(letter) {
+                        return letter.toUpperCase();
+                    }
+                );
+
+        showStatus("Converted to Title Case.");
+
+    }
+
+
+    function convertToSentenceCase() {
+
+        const text =
+            textArea.value
+                .toLowerCase();
+
+
+        textArea.value =
+            text.replace(
+                /(^\s*\w|[.!?]\s*\w)/g,
+                function(match) {
+
+                    return match.toUpperCase();
+
+                }
+            );
+
+
+        showStatus(
+            "Converted to sentence case."
+        );
+
+    }
+
+
+    function convertToAlternatingCase() {
+
+        const text =
+            textArea.value;
+
+
+        let result = "";
+
+        let letterIndex = 0;
+
+
+        for (
+            let i = 0;
+            i < text.length;
+            i++
+        ) {
+
+            const character =
+                text[i];
+
+
+            if (
+                character.match(/[a-zA-Z]/)
+            ) {
+
+                if (
+                    letterIndex % 2 === 0
+                ) {
+
+                    result +=
+                        character.toLowerCase();
+
+                } else {
+
+                    result +=
+                        character.toUpperCase();
+
+                }
+
+                letterIndex++;
+
+            } else {
+
+                result += character;
+
+            }
+
+        }
+
+
+        textArea.value =
+            result;
+
+
+        showStatus(
+            "Converted to alternating case."
+        );
+
+    }
+
+
+    function convertToInverseCase() {
+
+        const text =
+            textArea.value;
+
+
+        let result = "";
+
+
+        for (
+            let i = 0;
+            i < text.length;
+            i++
+        ) {
+
+            const character =
+                text[i];
+
+
+            if (
+                character ===
+                character.toUpperCase() &&
+                character !==
+                character.toLowerCase()
+            ) {
+
+                result +=
+                    character.toLowerCase();
+
+            }
+
+            else if (
+                character ===
+                character.toLowerCase() &&
+                character !==
+                character.toUpperCase()
+            ) {
+
+                result +=
+                    character.toUpperCase();
+
+            }
+
+            else {
+
+                result += character;
+
+            }
+
+        }
+
+
+        textArea.value =
+            result;
+
+
+        showStatus(
+            "Converted to inverse case."
+        );
+
+    }
+
+
+    async function copyText() {
+
+        if (
+            textArea.value.trim() === ""
+        ) {
+
+            showStatus(
+                "There is no text to copy."
+            );
+
+            return;
+
+        }
+
+
+        try {
+
+            await navigator.clipboard.writeText(
+                textArea.value
+            );
+
+            showStatus(
+                "Text copied to clipboard!"
+            );
+
+        }
+
+        catch {
+
+            textArea.select();
+
+            document.execCommand("copy");
+
+            showStatus(
+                "Text copied to clipboard!"
+            );
+
+        }
+
+    }
+
+
+    function clearText() {
+
+        textArea.value = "";
+
+        showStatus("Text cleared.");
+
+        textArea.focus();
+
+    }
+
+
+    function showStatus(message) {
+
+        status.textContent =
+            message;
+
+
+        setTimeout(
+            function() {
+
+                status.textContent = "";
+
+            },
+            2500
+        );
+
+    }
+
+
+</script>
+
+
+</body>
+
+</html>

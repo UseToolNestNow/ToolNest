@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Word Counter - ToolNest</title>
+
+    <meta
+        name="description"
+        content="Free online word counter. Count words, characters, sentences, paragraphs, and reading time."
+    >
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #0f1115;
+            color: white;
+            min-height: 100vh;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 8%;
+            border-bottom: 1px solid #252830;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        header a {
+            color: #aaa;
+            text-decoration: none;
+        }
+
+        header a:hover {
+            color: white;
+        }
+
+        .page {
+            width: 90%;
+            max-width: 1000px;
+            margin: 70px auto;
+        }
+
+        .page h1 {
+            text-align: center;
+            font-size: 45px;
+            margin-bottom: 15px;
+        }
+
+        .description {
+            text-align: center;
+            color: #888;
+            margin-bottom: 40px;
+        }
+
+        .counter {
+            background: #181b21;
+            border: 1px solid #292c34;
+            border-radius: 18px;
+            padding: 30px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 300px;
+            resize: vertical;
+
+            padding: 20px;
+
+            background: #101217;
+            color: white;
+
+            border: 1px solid #333;
+            border-radius: 12px;
+
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+
+            line-height: 1.6;
+
+            outline: none;
+        }
+
+        textarea:focus {
+            border-color: #666;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .stat {
+            background: #101217;
+            border: 1px solid #272a32;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        .stat-label {
+            color: #888;
+            font-size: 13px;
+        }
+
+        .clear-button {
+            width: 100%;
+            margin-top: 15px;
+
+            padding: 15px;
+
+            background: #101217;
+            color: white;
+
+            border: 1px solid #333;
+            border-radius: 10px;
+
+            cursor: pointer;
+
+            font-size: 15px;
+        }
+
+        .clear-button:hover {
+            background: #22252c;
+        }
+
+        @media (max-width: 700px) {
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .page h1 {
+                font-size: 38px;
+            }
+
+        }
+
+        @media (max-width: 450px) {
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <header>
+
+        <div class="logo">
+            ToolNest
+        </div>
+
+        <a href="../index.html">
+            ← Back to ToolNest
+        </a>
+
+    </header>
+
+
+    <main class="page">
+
+        <h1>
+            Word Counter
+        </h1>
+
+        <p class="description">
+            Count words, characters, sentences, paragraphs, and reading time.
+        </p>
+
+
+        <div class="counter">
+
+
+            <textarea
+                id="textInput"
+                placeholder="Start typing or paste your text here..."
+            ></textarea>
+
+
+            <div class="stats">
+
+
+                <div class="stat">
+
+                    <div
+                        class="stat-number"
+                        id="wordCount"
+                    >
+                        0
+                    </div>
+
+                    <div class="stat-label">
+                        Words
+                    </div>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <div
+                        class="stat-number"
+                        id="characterCount"
+                    >
+                        0
+                    </div>
+
+                    <div class="stat-label">
+                        Characters
+                    </div>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <div
+                        class="stat-number"
+                        id="characterNoSpaceCount"
+                    >
+                        0
+                    </div>
+
+                    <div class="stat-label">
+                        Characters (no spaces)
+                    </div>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <div
+                        class="stat-number"
+                        id="sentenceCount"
+                    >
+                        0
+                    </div>
+
+                    <div class="stat-label">
+                        Sentences
+                    </div>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <div
+                        class="stat-number"
+                        id="paragraphCount"
+                    >
+                        0
+                    </div>
+
+                    <div class="stat-label">
+                        Paragraphs
+                    </div>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <div
+                        class="stat-number"
+                        id="readingTime"
+                    >
+                        0 min
+                    </div>
+
+                    <div class="stat-label">
+                        Reading Time
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <button
+                class="clear-button"
+                onclick="clearText()"
+            >
+                Clear Text
+            </button>
+
+
+        </div>
+
+    </main>
+
+
+    <script>
+
+
+        const textInput =
+            document.getElementById("textInput");
+
+
+        const wordCount =
+            document.getElementById("wordCount");
+
+
+        const characterCount =
+            document.getElementById("characterCount");
+
+
+        const characterNoSpaceCount =
+            document.getElementById(
+                "characterNoSpaceCount"
+            );
+
+
+        const sentenceCount =
+            document.getElementById("sentenceCount");
+
+
+        const paragraphCount =
+            document.getElementById("paragraphCount");
+
+
+        const readingTime =
+            document.getElementById("readingTime");
+
+
+        textInput.addEventListener(
+            "input",
+            updateCounter
+        );
+
+
+        function updateCounter() {
+
+
+            const text =
+                textInput.value;
+
+
+            /*
+             * CHARACTERS
+             */
+
+            characterCount.textContent =
+                text.length;
+
+
+            /*
+             * CHARACTERS WITHOUT SPACES
+             */
+
+            characterNoSpaceCount.textContent =
+                text.replace(/\s/g, "").length;
+
+
+            /*
+             * WORDS
+             *
+             * This recognizes normal words,
+             * contractions, and hyphenated words.
+             */
+
+            const words =
+                text.match(
+                    /\b[\p{L}\p{N}]+(?:['’\-][\p{L}\p{N}]+)*\b/gu
+                );
+
+
+            wordCount.textContent =
+                words ? words.length : 0;
+
+
+            /*
+             * SENTENCES
+             */
+
+            const sentences =
+                text.match(
+                    /[^.!?]+[.!?]+/g
+                );
+
+
+            sentenceCount.textContent =
+                sentences ? sentences.length : 0;
+
+
+            /*
+             * PARAGRAPHS
+             */
+
+            const paragraphs =
+                text
+                    .trim()
+                    .split(/\n\s*\n/)
+                    .filter(
+                        paragraph =>
+                            paragraph.trim().length > 0
+                    );
+
+
+            paragraphCount.textContent =
+                text.trim() === ""
+                    ? 0
+                    : paragraphs.length;
+
+
+            /*
+             * READING TIME
+             *
+             * Average reading speed:
+             * 200 words per minute.
+             */
+
+            const wordsNumber =
+                words ? words.length : 0;
+
+
+            const minutes =
+                wordsNumber / 200;
+
+
+            if (wordsNumber === 0) {
+
+                readingTime.textContent =
+                    "0 min";
+
+            } else if (minutes < 1) {
+
+                readingTime.textContent =
+                    "< 1 min";
+
+            } else {
+
+                readingTime.textContent =
+                    Math.ceil(minutes) + " min";
+
+            }
+
+        }
+
+
+        function clearText() {
+
+            textInput.value = "";
+
+            updateCounter();
+
+            textInput.focus();
+
+        }
+
+
+    </script>
+
+
+</body>
+
+</html>

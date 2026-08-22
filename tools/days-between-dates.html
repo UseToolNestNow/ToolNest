@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Days Between Dates - ToolNest</title>
+
+    <meta
+        name="description"
+        content="Calculate the number of days between two dates with ToolNest."
+    >
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #0f1115;
+            color: white;
+            min-height: 100vh;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 8%;
+            border-bottom: 1px solid #252830;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        header a {
+            color: #aaa;
+            text-decoration: none;
+        }
+
+        header a:hover {
+            color: white;
+        }
+
+        .page {
+            width: 90%;
+            max-width: 700px;
+            margin: 70px auto;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 45px;
+            margin-bottom: 15px;
+        }
+
+        .description {
+            text-align: center;
+            color: #888;
+            margin-bottom: 40px;
+        }
+
+        .calculator {
+            background: #181b21;
+            border: 1px solid #292c34;
+            border-radius: 18px;
+            padding: 30px;
+        }
+
+        .date-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            color: #aaa;
+            margin-bottom: 8px;
+        }
+
+        input[type="date"] {
+            width: 100%;
+            padding: 16px;
+
+            background: #101217;
+            color: white;
+
+            border: 1px solid #333;
+            border-radius: 10px;
+
+            font-size: 16px;
+            outline: none;
+        }
+
+        input[type="date"]:focus {
+            border-color: #666;
+        }
+
+        .calculate {
+            width: 100%;
+            padding: 17px;
+
+            background: white;
+            color: black;
+
+            border: none;
+            border-radius: 10px;
+
+            font-size: 16px;
+            font-weight: bold;
+
+            cursor: pointer;
+            margin-top: 5px;
+        }
+
+        .calculate:hover {
+            background: #ddd;
+        }
+
+        .result {
+            display: none;
+
+            margin-top: 25px;
+            padding: 30px;
+
+            background: #101217;
+            border: 1px solid #272a32;
+            border-radius: 12px;
+
+            text-align: center;
+        }
+
+        .result-label {
+            color: #888;
+            margin-bottom: 10px;
+        }
+
+        .days {
+            font-size: 48px;
+            font-weight: bold;
+        }
+
+        .breakdown {
+            margin-top: 15px;
+            color: #888;
+            line-height: 1.6;
+        }
+
+        .error {
+            display: none;
+
+            margin-top: 15px;
+            padding: 15px;
+
+            background: #211416;
+            border: 1px solid #48282b;
+            border-radius: 10px;
+
+            color: #ff9b9b;
+            text-align: center;
+        }
+
+        .include-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 5px 0 20px;
+            color: #aaa;
+        }
+
+        .include-row input {
+            width: auto;
+        }
+
+        @media (max-width: 600px) {
+
+            h1 {
+                font-size: 38px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="logo">
+        ToolNest
+    </div>
+
+    <a href="../index.html">
+        ← Back to ToolNest
+    </a>
+
+</header>
+
+
+<main class="page">
+
+    <h1>
+        Days Between Dates
+    </h1>
+
+    <p class="description">
+        Find exactly how many days are between two dates.
+    </p>
+
+
+    <div class="calculator">
+
+
+        <div class="date-group">
+
+            <label for="startDate">
+                Start Date
+            </label>
+
+            <input
+                id="startDate"
+                type="date"
+            >
+
+        </div>
+
+
+        <div class="date-group">
+
+            <label for="endDate">
+                End Date
+            </label>
+
+            <input
+                id="endDate"
+                type="date"
+            >
+
+        </div>
+
+
+        <label class="include-row">
+
+            <input
+                id="includeEnd"
+                type="checkbox"
+            >
+
+            Include the end date
+
+        </label>
+
+
+        <button
+            class="calculate"
+            onclick="calculateDays()"
+        >
+            Calculate Days
+        </button>
+
+
+        <div
+            id="error"
+            class="error"
+        ></div>
+
+
+        <div
+            id="result"
+            class="result"
+        >
+
+            <div class="result-label">
+                Difference
+            </div>
+
+            <div
+                id="days"
+                class="days"
+            >
+                0 days
+            </div>
+
+            <div
+                id="breakdown"
+                class="breakdown"
+            ></div>
+
+        </div>
+
+
+    </div>
+
+</main>
+
+
+<script>
+
+    function calculateDays() {
+
+        const startInput =
+            document.getElementById("startDate");
+
+        const endInput =
+            document.getElementById("endDate");
+
+        const includeEnd =
+            document.getElementById("includeEnd").checked;
+
+        const error =
+            document.getElementById("error");
+
+        const result =
+            document.getElementById("result");
+
+        const daysDisplay =
+            document.getElementById("days");
+
+        const breakdown =
+            document.getElementById("breakdown");
+
+
+        error.style.display = "none";
+        result.style.display = "none";
+
+
+        if (
+            startInput.value === "" ||
+            endInput.value === ""
+        ) {
+
+            showError(
+                "Please select both dates."
+            );
+
+            return;
+
+        }
+
+
+        /*
+         * Using UTC prevents daylight-saving-time
+         * changes from affecting the calculation.
+         */
+
+        const start =
+            new Date(
+                startInput.value + "T00:00:00Z"
+            );
+
+        const end =
+            new Date(
+                endInput.value + "T00:00:00Z"
+            );
+
+
+        if (
+            Number.isNaN(start.getTime()) ||
+            Number.isNaN(end.getTime())
+        ) {
+
+            showError(
+                "Please enter valid dates."
+            );
+
+            return;
+
+        }
+
+
+        if (end < start) {
+
+            showError(
+                "The end date must be after the start date."
+            );
+
+            return;
+
+        }
+
+
+        const millisecondsPerDay =
+            1000 * 60 * 60 * 24;
+
+
+        let difference =
+            Math.round(
+                (end - start) /
+                millisecondsPerDay
+            );
+
+
+        if (includeEnd) {
+            difference += 1;
+        }
+
+
+        const years =
+            Math.floor(
+                difference / 365
+            );
+
+        const remainingAfterYears =
+            difference % 365;
+
+        const months =
+            Math.floor(
+                remainingAfterYears / 30
+            );
+
+        const remainingDays =
+            remainingAfterYears % 30;
+
+
+        daysDisplay.textContent =
+            difference.toLocaleString() +
+            (
+                difference === 1
+                    ? " day"
+                    : " days"
+            );
+
+
+        let breakdownText =
+            difference.toLocaleString() +
+            " total days";
+
+
+        if (difference >= 365) {
+
+            breakdownText +=
+                " • approximately " +
+                years +
+                " year" +
+                (years === 1 ? "" : "s");
+
+        }
+
+
+        breakdown.textContent =
+            breakdownText;
+
+
+        result.style.display =
+            "block";
+
+    }
+
+
+    function showError(message) {
+
+        const error =
+            document.getElementById("error");
+
+        error.textContent =
+            message;
+
+        error.style.display =
+            "block";
+
+    }
+
+</script>
+
+
+</body>
+
+</html>

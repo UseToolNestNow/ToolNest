@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Age Calculator - ToolNest</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #0f1115;
+            color: white;
+            min-height: 100vh;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 8%;
+            border-bottom: 1px solid #252830;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        header a {
+            color: #aaa;
+            text-decoration: none;
+        }
+
+        header a:hover {
+            color: white;
+        }
+
+        .calculator-page {
+            width: 90%;
+            max-width: 700px;
+            margin: 80px auto;
+        }
+
+        .calculator-page h1 {
+            text-align: center;
+            font-size: 45px;
+            margin-bottom: 15px;
+        }
+
+        .description {
+            text-align: center;
+            color: #888;
+            margin-bottom: 45px;
+        }
+
+        .calculator {
+            background: #181b21;
+            border: 1px solid #292c34;
+            border-radius: 18px;
+            padding: 35px;
+        }
+
+        .calculator h2 {
+            margin-bottom: 25px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #aaa;
+        }
+
+        input {
+            width: 100%;
+            padding: 16px;
+            border-radius: 10px;
+            border: 1px solid #333;
+            background: #101217;
+            color: white;
+            font-size: 17px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #666;
+        }
+
+        button {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 10px;
+            background: white;
+            color: black;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+
+        button:hover {
+            background: #ddd;
+        }
+
+        #result {
+            margin-top: 25px;
+            padding: 20px;
+            background: #101217;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            line-height: 1.6;
+            display: none;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <header>
+
+        <div class="logo">
+            ToolNest
+        </div>
+
+        <a href="../index.html">
+            ← Back to ToolNest
+        </a>
+
+    </header>
+
+
+    <main class="calculator-page">
+
+        <h1>
+            Age Calculator
+        </h1>
+
+        <p class="description">
+            Find out exactly how old you are.
+        </p>
+
+
+        <div class="calculator">
+
+            <h2>
+                Enter your birthday
+            </h2>
+
+
+            <div class="input-group">
+
+                <label for="birthday">
+                    Date of Birth
+                </label>
+
+                <input
+                    id="birthday"
+                    type="date"
+                >
+
+            </div>
+
+
+            <button onclick="calculateAge()">
+                Calculate Age
+            </button>
+
+
+            <div id="result"></div>
+
+        </div>
+
+    </main>
+
+
+    <script>
+
+        function calculateAge() {
+
+            const birthdayInput =
+                document.getElementById("birthday").value;
+
+            const resultBox =
+                document.getElementById("result");
+
+
+            if (!birthdayInput) {
+
+                resultBox.style.display = "block";
+
+                resultBox.innerText =
+                    "Please enter your birthday.";
+
+                return;
+
+            }
+
+
+            const birthday =
+                new Date(birthdayInput + "T00:00:00");
+
+
+            const today =
+                new Date();
+
+
+            if (birthday > today) {
+
+                resultBox.style.display = "block";
+
+                resultBox.innerText =
+                    "Your birthday cannot be in the future.";
+
+                return;
+
+            }
+
+
+            let years =
+                today.getFullYear() -
+                birthday.getFullYear();
+
+
+            let months =
+                today.getMonth() -
+                birthday.getMonth();
+
+
+            let days =
+                today.getDate() -
+                birthday.getDate();
+
+
+            if (days < 0) {
+
+                months--;
+
+                const previousMonth =
+                    new Date(
+                        today.getFullYear(),
+                        today.getMonth(),
+                        0
+                    );
+
+                days +=
+                    previousMonth.getDate();
+
+            }
+
+
+            if (months < 0) {
+
+                years--;
+
+                months += 12;
+
+            }
+
+
+            resultBox.style.display = "block";
+
+            resultBox.innerHTML =
+                "You are <strong>" +
+                years +
+                " years, " +
+                months +
+                " months, and " +
+                days +
+                " days old.</strong>";
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>

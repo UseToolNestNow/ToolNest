@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Time Calculator - ToolNest</title>
+
+    <meta
+        name="description"
+        content="Add and subtract hours and minutes with the free ToolNest Time Calculator."
+    >
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #0f1115;
+            color: white;
+            min-height: 100vh;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 8%;
+            border-bottom: 1px solid #252830;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        header a {
+            color: #aaa;
+            text-decoration: none;
+        }
+
+        header a:hover {
+            color: white;
+        }
+
+        .page {
+            width: 90%;
+            max-width: 750px;
+            margin: 70px auto;
+        }
+
+        .page h1 {
+            text-align: center;
+            font-size: 45px;
+            margin-bottom: 15px;
+        }
+
+        .description {
+            text-align: center;
+            color: #888;
+            margin-bottom: 40px;
+        }
+
+        .calculator {
+            background: #181b21;
+            border: 1px solid #292c34;
+            border-radius: 18px;
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            color: #aaa;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .time-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            color: #888;
+            font-size: 13px;
+            margin-bottom: 7px;
+        }
+
+        input {
+            width: 100%;
+            padding: 16px;
+
+            background: #101217;
+            color: white;
+
+            border: 1px solid #333;
+            border-radius: 10px;
+
+            font-size: 17px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #666;
+        }
+
+        .operation {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .operation button {
+            padding: 14px;
+
+            background: #101217;
+            color: white;
+
+            border: 1px solid #333;
+            border-radius: 10px;
+
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .operation button:hover {
+            background: #292c34;
+        }
+
+        .operation button.active {
+            background: white;
+            color: black;
+        }
+
+        .calculate {
+            width: 100%;
+            padding: 17px;
+
+            background: white;
+            color: black;
+
+            border: none;
+            border-radius: 10px;
+
+            font-size: 16px;
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .calculate:hover {
+            background: #ddd;
+        }
+
+        .result {
+            display: none;
+
+            margin-top: 25px;
+            padding: 30px;
+
+            background: #101217;
+            border: 1px solid #272a32;
+            border-radius: 12px;
+
+            text-align: center;
+        }
+
+        .result-label {
+            color: #888;
+            margin-bottom: 10px;
+        }
+
+        .result-time {
+            font-size: 42px;
+            font-weight: bold;
+        }
+
+        .error {
+            display: none;
+
+            margin-top: 15px;
+            padding: 15px;
+
+            background: #211416;
+            border: 1px solid #48282b;
+            border-radius: 10px;
+
+            color: #ff9b9b;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+
+            .page h1 {
+                font-size: 38px;
+            }
+
+            .time-inputs {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="logo">
+        ToolNest
+    </div>
+
+    <a href="../index.html">
+        ← Back to ToolNest
+    </a>
+
+</header>
+
+
+<main class="page">
+
+    <h1>
+        Time Calculator
+    </h1>
+
+    <p class="description">
+        Add or subtract hours and minutes.
+    </p>
+
+
+    <div class="calculator">
+
+
+        <div class="section">
+
+            <div class="section-title">
+                First Time
+            </div>
+
+            <div class="time-inputs">
+
+                <div class="input-group">
+
+                    <label for="hours1">
+                        Hours
+                    </label>
+
+                    <input
+                        id="hours1"
+                        type="number"
+                        min="0"
+                        placeholder="0"
+                    >
+
+                </div>
+
+                <div class="input-group">
+
+                    <label for="minutes1">
+                        Minutes
+                    </label>
+
+                    <input
+                        id="minutes1"
+                        type="number"
+                        min="0"
+                        placeholder="0"
+                    >
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="section">
+
+            <div class="section-title">
+                Second Time
+            </div>
+
+            <div class="time-inputs">
+
+                <div class="input-group">
+
+                    <label for="hours2">
+                        Hours
+                    </label>
+
+                    <input
+                        id="hours2"
+                        type="number"
+                        min="0"
+                        placeholder="0"
+                    >
+
+                </div>
+
+                <div class="input-group">
+
+                    <label for="minutes2">
+                        Minutes
+                    </label>
+
+                    <input
+                        id="minutes2"
+                        type="number"
+                        min="0"
+                        placeholder="0"
+                    >
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="section-title">
+            Operation
+        </div>
+
+
+        <div class="operation">
+
+            <button
+                id="addButton"
+                class="active"
+                onclick="setOperation('add')"
+            >
+                + Add
+            </button>
+
+            <button
+                id="subtractButton"
+                onclick="setOperation('subtract')"
+            >
+                − Subtract
+            </button>
+
+        </div>
+
+
+        <button
+            class="calculate"
+            onclick="calculateTime()"
+        >
+            Calculate Time
+        </button>
+
+
+        <div
+            class="error"
+            id="error"
+        ></div>
+
+
+        <div
+            class="result"
+            id="result"
+        >
+
+            <div class="result-label">
+                Result
+            </div>
+
+            <div
+                class="result-time"
+                id="resultTime"
+            >
+                0h 0m
+            </div>
+
+        </div>
+
+
+    </div>
+
+</main>
+
+
+<script>
+
+    let operation = "add";
+
+
+    function setOperation(value) {
+
+        operation = value;
+
+        document
+            .getElementById("addButton")
+            .classList.toggle(
+                "active",
+                value === "add"
+            );
+
+        document
+            .getElementById("subtractButton")
+            .classList.toggle(
+                "active",
+                value === "subtract"
+            );
+
+    }
+
+
+    function getValue(id) {
+
+        const value =
+            document.getElementById(id).value;
+
+        if (value === "") {
+            return 0;
+        }
+
+        return Number(value);
+
+    }
+
+
+    function calculateTime() {
+
+        const error =
+            document.getElementById("error");
+
+        const result =
+            document.getElementById("result");
+
+        error.style.display = "none";
+        result.style.display = "none";
+
+
+        const hours1 =
+            getValue("hours1");
+
+        const minutes1 =
+            getValue("minutes1");
+
+        const hours2 =
+            getValue("hours2");
+
+        const minutes2 =
+            getValue("minutes2");
+
+
+        if (
+            !Number.isFinite(hours1) ||
+            !Number.isFinite(minutes1) ||
+            !Number.isFinite(hours2) ||
+            !Number.isFinite(minutes2)
+        ) {
+
+            showError(
+                "Please enter valid numbers."
+            );
+
+            return;
+
+        }
+
+
+        if (
+            hours1 < 0 ||
+            minutes1 < 0 ||
+            hours2 < 0 ||
+            minutes2 < 0
+        ) {
+
+            showError(
+                "Time values cannot be negative."
+            );
+
+            return;
+
+        }
+
+
+        const totalMinutes1 =
+            (hours1 * 60) + minutes1;
+
+        const totalMinutes2 =
+            (hours2 * 60) + minutes2;
+
+
+        let totalMinutes;
+
+
+        if (operation === "add") {
+
+            totalMinutes =
+                totalMinutes1 +
+                totalMinutes2;
+
+        } else {
+
+            totalMinutes =
+                totalMinutes1 -
+                totalMinutes2;
+
+        }
+
+
+        const negative =
+            totalMinutes < 0;
+
+
+        const absoluteMinutes =
+            Math.abs(totalMinutes);
+
+
+        const hours =
+            Math.floor(
+                absoluteMinutes / 60
+            );
+
+        const minutes =
+            absoluteMinutes % 60;
+
+
+        document.getElementById(
+            "resultTime"
+        ).textContent =
+            (negative ? "−" : "") +
+            hours +
+            "h " +
+            minutes +
+            "m";
+
+
+        result.style.display =
+            "block";
+
+    }
+
+
+    function showError(message) {
+
+        const error =
+            document.getElementById("error");
+
+        error.textContent =
+            message;
+
+        error.style.display =
+            "block";
+
+    }
+
+</script>
+
+
+</body>
+
+</html>

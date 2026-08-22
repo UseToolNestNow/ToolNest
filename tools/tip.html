@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Tip Calculator - ToolNest</title>
+
+    <meta
+        name="description"
+        content="Calculate tips, total bills, and the amount each person pays with ToolNest."
+    >
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #0f1115;
+            color: white;
+            min-height: 100vh;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 8%;
+            border-bottom: 1px solid #252830;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        header a {
+            color: #aaa;
+            text-decoration: none;
+        }
+
+        header a:hover {
+            color: white;
+        }
+
+        .page {
+            width: 90%;
+            max-width: 700px;
+            margin: 70px auto;
+        }
+
+        .page h1 {
+            text-align: center;
+            font-size: 45px;
+            margin-bottom: 15px;
+        }
+
+        .description {
+            text-align: center;
+            color: #888;
+            margin-bottom: 40px;
+        }
+
+        .calculator {
+            background: #181b21;
+            border: 1px solid #292c34;
+            border-radius: 18px;
+            padding: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #aaa;
+        }
+
+        input {
+            width: 100%;
+            padding: 16px;
+
+            background: #101217;
+            color: white;
+
+            border: 1px solid #333;
+            border-radius: 10px;
+
+            font-size: 17px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #666;
+        }
+
+        .tip-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tip-button {
+            padding: 12px;
+
+            background: #101217;
+            color: white;
+
+            border: 1px solid #333;
+            border-radius: 10px;
+
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .tip-button:hover {
+            background: #292c34;
+        }
+
+        .tip-button.active {
+            background: white;
+            color: black;
+        }
+
+        button.calculate {
+            width: 100%;
+            padding: 16px;
+
+            border: none;
+            border-radius: 10px;
+
+            background: white;
+            color: black;
+
+            font-size: 16px;
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        button.calculate:hover {
+            background: #ddd;
+        }
+
+        .results {
+            display: none;
+
+            margin-top: 25px;
+
+            background: #101217;
+
+            border: 1px solid #272a32;
+            border-radius: 12px;
+
+            overflow: hidden;
+        }
+
+        .result {
+            padding: 20px;
+
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+
+            border-bottom: 1px solid #272a32;
+        }
+
+        .result:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            color: #888;
+        }
+
+        .result-value {
+            font-weight: bold;
+            text-align: right;
+        }
+
+        .total {
+            font-size: 24px;
+        }
+
+        .error {
+            display: none;
+
+            margin-top: 15px;
+            padding: 15px;
+
+            background: #211416;
+
+            border: 1px solid #48282b;
+            border-radius: 10px;
+
+            color: #ff9b9b;
+
+            text-align: center;
+        }
+
+        @media (max-width: 500px) {
+
+            .page h1 {
+                font-size: 38px;
+            }
+
+            .tip-buttons {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .result {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .result-value {
+                text-align: left;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="logo">
+        ToolNest
+    </div>
+
+    <a href="../index.html">
+        ← Back to ToolNest
+    </a>
+
+</header>
+
+
+<main class="page">
+
+    <h1>
+        Tip Calculator
+    </h1>
+
+    <p class="description">
+        Calculate your tip, total bill, and cost per person.
+    </p>
+
+
+    <div class="calculator">
+
+
+        <div class="input-group">
+
+            <label for="bill">
+                Bill Amount
+            </label>
+
+            <input
+                id="bill"
+                type="number"
+                min="0"
+                step="0.01"
+                placeholder="Example: 100"
+            >
+
+        </div>
+
+
+        <div class="input-group">
+
+            <label>
+                Tip Percentage
+            </label>
+
+            <div class="tip-buttons">
+
+                <button
+                    class="tip-button"
+                    data-tip="10"
+                >
+                    10%
+                </button>
+
+                <button
+                    class="tip-button"
+                    data-tip="15"
+                >
+                    15%
+                </button>
+
+                <button
+                    class="tip-button"
+                    data-tip="20"
+                >
+                    20%
+                </button>
+
+                <button
+                    class="tip-button"
+                    data-tip="25"
+                >
+                    25%
+                </button>
+
+            </div>
+
+
+            <input
+                id="tip"
+                type="number"
+                min="0"
+                step="0.1"
+                placeholder="Or enter your own %"
+            >
+
+        </div>
+
+
+        <div class="input-group">
+
+            <label for="people">
+                Number of People
+            </label>
+
+            <input
+                id="people"
+                type="number"
+                min="1"
+                step="1"
+                value="1"
+            >
+
+        </div>
+
+
+        <button
+            class="calculate"
+            onclick="calculateTip()"
+        >
+            Calculate Tip
+        </button>
+
+
+        <div
+            class="error"
+            id="error"
+        ></div>
+
+
+        <div
+            class="results"
+            id="results"
+        >
+
+            <div class="result">
+
+                <div class="result-label">
+                    Tip Amount
+                </div>
+
+                <div
+                    class="result-value"
+                    id="tipAmount"
+                >
+                    $0.00
+                </div>
+
+            </div>
+
+
+            <div class="result">
+
+                <div class="result-label">
+                    Total Bill
+                </div>
+
+                <div
+                    class="result-value total"
+                    id="totalBill"
+                >
+                    $0.00
+                </div>
+
+            </div>
+
+
+            <div class="result">
+
+                <div class="result-label">
+                    Per Person
+                </div>
+
+                <div
+                    class="result-value"
+                    id="perPerson"
+                >
+                    $0.00
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</main>
+
+
+<script>
+
+    const billInput =
+        document.getElementById("bill");
+
+    const tipInput =
+        document.getElementById("tip");
+
+    const peopleInput =
+        document.getElementById("people");
+
+    const results =
+        document.getElementById("results");
+
+    const error =
+        document.getElementById("error");
+
+
+    const tipButtons =
+        document.querySelectorAll(".tip-button");
+
+
+    tipButtons.forEach(
+        function(button) {
+
+            button.addEventListener(
+                "click",
+                function() {
+
+                    tipButtons.forEach(
+                        function(btn) {
+                            btn.classList.remove("active");
+                        }
+                    );
+
+                    button.classList.add("active");
+
+                    tipInput.value =
+                        button.dataset.tip;
+
+                }
+            );
+
+        }
+    );
+
+
+    function calculateTip() {
+
+        const bill =
+            Number(billInput.value);
+
+        const tipPercent =
+            Number(tipInput.value);
+
+        const people =
+            Number(peopleInput.value);
+
+
+        error.style.display = "none";
+
+        results.style.display = "none";
+
+
+        if (billInput.value === "") {
+
+            showError(
+                "Please enter the bill amount."
+            );
+
+            return;
+
+        }
+
+
+        if (bill < 0) {
+
+            showError(
+                "The bill amount cannot be negative."
+            );
+
+            return;
+
+        }
+
+
+        if (tipInput.value === "") {
+
+            showError(
+                "Please enter a tip percentage."
+            );
+
+            return;
+
+        }
+
+
+        if (tipPercent < 0) {
+
+            showError(
+                "The tip percentage cannot be negative."
+            );
+
+            return;
+
+        }
+
+
+        if (
+            peopleInput.value === "" ||
+            people < 1
+        ) {
+
+            showError(
+                "The number of people must be at least 1."
+            );
+
+            return;
+
+        }
+
+
+        const tipAmount =
+            bill * (tipPercent / 100);
+
+
+        const totalBill =
+            bill + tipAmount;
+
+
+        const perPerson =
+            totalBill / people;
+
+
+        document.getElementById(
+            "tipAmount"
+        ).textContent =
+            formatMoney(tipAmount);
+
+
+        document.getElementById(
+            "totalBill"
+        ).textContent =
+            formatMoney(totalBill);
+
+
+        document.getElementById(
+            "perPerson"
+        ).textContent =
+            formatMoney(perPerson);
+
+
+        results.style.display =
+            "block";
+
+    }
+
+
+    function formatMoney(amount) {
+
+        return new Intl.NumberFormat(
+            "en-US",
+            {
+                style: "currency",
+                currency: "USD"
+            }
+        ).format(amount);
+
+    }
+
+
+    function showError(message) {
+
+        error.textContent =
+            message;
+
+        error.style.display =
+            "block";
+
+    }
+
+</script>
+
+
+</body>
+
+</html>

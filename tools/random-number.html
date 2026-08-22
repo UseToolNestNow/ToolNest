@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Random Number Generator - ToolNest</title>
+
+    <meta
+        name="description"
+        content="Generate random numbers between any minimum and maximum with ToolNest."
+    >
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #0f1115;
+            color: white;
+            min-height: 100vh;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 8%;
+            border-bottom: 1px solid #252830;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        header a {
+            color: #aaa;
+            text-decoration: none;
+        }
+
+        header a:hover {
+            color: white;
+        }
+
+        .page {
+            width: 90%;
+            max-width: 700px;
+            margin: 70px auto;
+        }
+
+        .page h1 {
+            text-align: center;
+            font-size: 45px;
+            margin-bottom: 15px;
+        }
+
+        .description {
+            text-align: center;
+            color: #888;
+            margin-bottom: 40px;
+        }
+
+        .generator {
+            background: #181b21;
+            border: 1px solid #292c34;
+            border-radius: 18px;
+            padding: 30px;
+        }
+
+        .inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #aaa;
+        }
+
+        input {
+            width: 100%;
+            padding: 16px;
+
+            background: #101217;
+            color: white;
+
+            border: 1px solid #333;
+            border-radius: 10px;
+
+            font-size: 17px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #666;
+        }
+
+        .generate-button {
+            width: 100%;
+            padding: 17px;
+
+            background: white;
+            color: black;
+
+            border: none;
+            border-radius: 10px;
+
+            font-size: 16px;
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .generate-button:hover {
+            background: #ddd;
+        }
+
+        .result {
+            margin-top: 25px;
+            padding: 30px;
+
+            background: #101217;
+            border: 1px solid #272a32;
+            border-radius: 12px;
+
+            text-align: center;
+        }
+
+        .result-label {
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .number {
+            font-size: 50px;
+            font-weight: bold;
+            word-break: break-word;
+        }
+
+        .error {
+            display: none;
+
+            margin-top: 15px;
+            padding: 15px;
+
+            background: #211416;
+            border: 1px solid #48282b;
+            border-radius: 10px;
+
+            color: #ff9b9b;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+
+            .inputs {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .page h1 {
+                font-size: 38px;
+            }
+
+            .number {
+                font-size: 42px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="logo">
+        ToolNest
+    </div>
+
+    <a href="../index.html">
+        ← Back to ToolNest
+    </a>
+
+</header>
+
+
+<main class="page">
+
+    <h1>
+        Random Number Generator
+    </h1>
+
+    <p class="description">
+        Generate a random number between any two values.
+    </p>
+
+
+    <div class="generator">
+
+
+        <div class="inputs">
+
+
+            <div class="input-group">
+
+                <label for="minimum">
+                    Minimum
+                </label>
+
+                <input
+                    id="minimum"
+                    type="number"
+                    placeholder="Example: 1"
+                >
+
+            </div>
+
+
+            <div class="input-group">
+
+                <label for="maximum">
+                    Maximum
+                </label>
+
+                <input
+                    id="maximum"
+                    type="number"
+                    placeholder="Example: 100"
+                >
+
+            </div>
+
+
+        </div>
+
+
+        <button
+            class="generate-button"
+            onclick="generateNumber()"
+        >
+            Generate Number
+        </button>
+
+
+        <div
+            class="error"
+            id="error"
+        ></div>
+
+
+        <div class="result">
+
+            <div class="result-label">
+                Random Number
+            </div>
+
+            <div
+                class="number"
+                id="result"
+            >
+                —
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+</main>
+
+
+<script>
+
+    function generateNumber() {
+
+        const minimumInput =
+            document.getElementById("minimum");
+
+        const maximumInput =
+            document.getElementById("maximum");
+
+        const result =
+            document.getElementById("result");
+
+        const error =
+            document.getElementById("error");
+
+
+        error.style.display = "none";
+
+
+        if (
+            minimumInput.value === "" ||
+            maximumInput.value === ""
+        ) {
+
+            showError(
+                "Please enter both a minimum and maximum."
+            );
+
+            return;
+
+        }
+
+
+        const minimum =
+            Number(minimumInput.value);
+
+        const maximum =
+            Number(maximumInput.value);
+
+
+        if (
+            !Number.isFinite(minimum) ||
+            !Number.isFinite(maximum)
+        ) {
+
+            showError(
+                "Please enter valid numbers."
+            );
+
+            return;
+
+        }
+
+
+        if (minimum > maximum) {
+
+            showError(
+                "The minimum cannot be greater than the maximum."
+            );
+
+            return;
+
+        }
+
+
+        /*
+         * Generate an integer
+         * including both minimum
+         * and maximum.
+         */
+
+        const randomNumber =
+            Math.floor(
+                Math.random() *
+                (maximum - minimum + 1)
+            ) + minimum;
+
+
+        result.textContent =
+            randomNumber.toLocaleString();
+
+    }
+
+
+    function showError(message) {
+
+        const error =
+            document.getElementById("error");
+
+        error.textContent =
+            message;
+
+        error.style.display =
+            "block";
+
+    }
+
+</script>
+
+
+</body>
+
+</html>
